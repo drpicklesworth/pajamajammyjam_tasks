@@ -13,6 +13,12 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="PJJ Tasks">
     
+    <!-- Prevent iOS Safari features that break app feel -->
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- iOS Splash Screens -->
+    <link rel="apple-touch-startup-image" href="icon-512.png">
+    
     <!-- Manifest Link -->
     <link rel="manifest" href="manifest.json">
     
@@ -39,6 +45,14 @@
             font-family: 'Courier New', monospace;
             padding: 20px;
             padding-bottom: 120px;
+            /* Prevent pull-to-refresh and overscroll for native feel */
+            overscroll-behavior-y: contain;
+            -webkit-overflow-scrolling: touch;
+            /* Prevent text selection for more app-like feel */
+            -webkit-user-select: none;
+            user-select: none;
+            /* Prevent tap highlight on mobile */
+            -webkit-tap-highlight-color: transparent;
         }
 
         .password-overlay {
@@ -82,6 +96,9 @@
             border-radius: 5px;
             background: rgba(255, 255, 255, 0.9);
             font-family: 'Courier New', monospace;
+            /* Allow text selection in input */
+            -webkit-user-select: text;
+            user-select: text;
         }
 
         .password-box button {
@@ -312,6 +329,9 @@
             color: #2a2a2a;
             border: 1px solid #d4c4a0;
             z-index: 1;
+            /* Allow text selection in letter */
+            -webkit-user-select: text;
+            user-select: text;
         }
 
         .envelope.open .letter {
