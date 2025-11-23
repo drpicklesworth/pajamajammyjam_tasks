@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tasks - Pajama Jammy Jam</title>
+    
+    <!-- PWA Meta Tags -->
+    <meta name="description" content="Complete tasks before the party and share your submissions">
+    <meta name="theme-color" content="#4A90E2">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="Tasks">
+    
+    <!-- Manifest Link -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Icons for iOS -->
+    <link rel="apple-touch-icon" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="icon-512.png">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .instructions {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .instructions h2 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .instructions p {
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .tasks-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .envelope {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .envelope:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.2);
+        }
+        
+        .envelope-number {
+            background: #667eea;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .envelope h3 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+        
+        .envelope p {
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        .submit-btn {
+            background: #764ba2;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 1em;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            transition: background 0.3s;
+        }
+        
+        .submit-btn:hover {
+            background: #5a3680;
+        }
+        
+        .install-prompt {
+            background: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            margin-bottom: 20px;
+            display: none;
+        }
+        
+        .install-prompt button {
+            background: white;
+            color: #4CAF50;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .offline-indicator {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #ff9800;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 Pajama Jammy Jam Tasks</h1>
+        </div>
+        
+        <div class="install-prompt" id="installPrompt">
+            <p>Install this app for easy access!</p>
+            <button id="installBtn">Install</button>
+            <button id="dismissBtn">Not Now</button>
+        </div>
+        
+        <div class="instructions">
+            <h2>📋 Instructions</h2>
+            <p>Perform each of these tasks BEFORE the party. If your task involves taking a picture or video, please share it ahead of time by using the form - Jason's assistant will then collect them and present them live during the party for Jason to judge.</p>
+        </div>
+        
+        <div class="tasks-grid">
+            <div class="envelope">
+                <div class="envelope-number">1</div>
+                <h3>Task One</h3>
+                <p>Complete your first challenge and submit proof of completion.</p>
+                <button class="submit-btn">Submit</button>
+            </div>
+            
+            <div class="envelope">
+                <div class="envelope-number">2</div>
+                <h3>Task Two</h3>
+                <p>Take a creative photo that shows your personality.</p>
+                <button class="submit-btn">Submit</button>
+            </div>
+            
+            <div class="envelope">
+                <div class="envelope-number">3</div>
+                <h3>Task Three</h3>
+                <p>Record a short video message for Jason.</p>
+                <button class="submit-btn">Submit</button>
+            </div>
+            
+            <div class="envelope">
+                <div class="envelope-number">4</div>
+                <h3>Task Four</h3>
+                <p>Create something fun and share it with the group.</p>
+                <button class="submit-btn">Submit</button>
+            </div>
+        </div>
+        
+        <div class="offline-indicator" id="offlineIndicator">
+            You're offline - some features may be limited
+        </div>
+    </div>
+    
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed:', err));
+            });
+        }
+        
+        // Install prompt handling
+        let deferredPrompt;
+        const installPrompt = document.getElementById('installPrompt');
+        const installBtn = document.getElementById('installBtn');
+        const dismissBtn = document.getElementById('dismissBtn');
+        
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installPrompt.style.display = 'block';
+        });
+        
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                deferredPrompt = null;
+                installPrompt.style.display = 'none';
+            }
+        });
+        
+        dismissBtn.addEventListener('click', () => {
+            installPrompt.style.display = 'none';
+        });
+        
+        // Online/Offline detection
+        const offlineIndicator = document.getElementById('offlineIndicator');
+        
+        window.addEventListener('online', () => {
+            offlineIndicator.style.display = 'none';
+        });
+        
+        window.addEventListener('offline', () => {
+            offlineIndicator.style.display = 'block';
+        });
+        
+        // Check initial state
+        if (!navigator.onLine) {
+            offlineIndicator.style.display = 'block';
+        }
+    </script>
+</body>
+</html>
